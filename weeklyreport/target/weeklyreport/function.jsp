@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
-<%@ page import="javax.servlet.http.HttpSession"%>
+<%@ page import="javax.servlet.http.HttpSession,java.io.*"%>
 
 <%!
     boolean checkMirPassword(String name, String password) {
@@ -138,7 +138,7 @@
 
             if (rs.next()) {
                 for (int i = 0; i < studentsNum; i++) {
-                    students[i] = rs.getString("name");
+                    students[i] = new String(rs.getString("name").getBytes("ISO-8859-1"), "gbk");
                     rs.next();
                 }
             }
@@ -174,17 +174,17 @@
             for (int i = 0; i < 5; i++) {
                 if (editable == 0) {
                     if (rs.getString(field + Integer.toString(i)) != null) {
-                        result += "<li>" + rs.getString(field + Integer.toString(i)) + "\n";
+                        result += "<li>" + new String(rs.getString(field + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
                     }
                 } else {
                     result += "<li><textarea name=\n";
                     result += field + Integer.toString(i) + "\n";
                     result += " cols=30 rows=2 wrap=virtual>\n";
-                    result += rs.getString(field + Integer.toString(i)) + "\n";
-                    result += "</textarea>\n";
+                    result += new String(rs.getString(field + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
+                    result += "</textarea></li>\n";
                 }
-                result += ("</ol>\n");
             }
+            result += "</ol>";
         } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
@@ -202,7 +202,7 @@
             result += "<ol>\n";
             for (int i = 0; i < 5; i++) {
                 if (rs.getString(taskField + Integer.toString(i)) != null) {
-                    result += "<li>¡¾<font color=red>" + rs.getString(dateField + Integer.toString(i)) + "</font>¡¿" + rs.getString(taskField + Integer.toString(i)) + "\n";
+                    result += "<li>¡¾<font color=red>" + new String(rs.getString(dateField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "</font>¡¿" + new String(rs.getString(taskField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
                 }
             }
             result += "</ol>\n";

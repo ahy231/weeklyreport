@@ -34,7 +34,7 @@
     //int recordId=-1;
 
     String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8";
 
     String USER = "stu_login";
     String PASS = "123";
@@ -99,7 +99,9 @@
             sql += "summary='" + request.getParameter("summary") + "' ";
             sql += "WHERE weekid=" + rs.getInt("weekid");
         }
+        //¸ü¸ÄsqlÓï¾ä±àÂë
         stmt.execute(sql);
+        System.out.println(sql);
 
         //Retrieve the record just entered
         sql = "SELECT * FROM " + name + " ORDER BY weekid DESC";
@@ -123,7 +125,7 @@
         out.println("<td valign=top>" + PrintSession(session, "prevDate", "prevTask") + " &nbsp; </td>");
         out.println("<td valign=top>" + PrintField(rs, "finished", 0) + " &nbsp;</td>");
         out.println("<td valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
-        out.println("<td valign=top>" + rs.getString("summary") + " &nbsp;</td>");
+        out.println("<td valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
         out.println("</table>");
 
         rs.close();

@@ -65,7 +65,7 @@
             String PASS = "123";
 
             Connection conn = null;
-            PreparedStatement preState = null;
+            Statement stmt = null;
             ResultSet rs = null;
 
             Date dNow = new Date();
@@ -87,17 +87,16 @@
 
                     conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-                    String sql = "SELECT * FROM " + name + " WHERE weekid=? ORDER BY weekid DESC";
-                    preState = conn.prepareStatement(sql);
-                    preState.setString(1, Integer.toString(weekid + weekDiff));
-                    rs = preState.executeQuery();
+                    String sql = "SELECT * FROM " + name + " WHERE weekid=" + Integer.toString(weekid + weekDiff);
+                    stmt = conn.createStatement();
+                    rs = stmt.executeQuery(sql);
 
                     if (rs.next()) { //有此人之登陆资料
                         out.println("<tr>");
                         out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?name=" + name + "\">" + name + "</a> </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + "&nbsp;</td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("summary") + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
                     } else {
                         out.println("<tr>");
                         out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?name=" + name + "\">" + name + "</a> </td>");
@@ -107,7 +106,7 @@
                     }
 
                     rs.close();
-                    preState.close();
+                    stmt.close();
                     conn.close();
                 } catch (SQLException se) {
                     se.printStackTrace();
@@ -115,7 +114,7 @@
                     e.printStackTrace();
                 } finally {
                     try {
-                        if (preState != null) preState.close();
+                        if (stmt != null) stmt.close();
                     } catch (SQLException se2){
                     }
                     try {
