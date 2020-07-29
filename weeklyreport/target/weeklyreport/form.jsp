@@ -7,6 +7,7 @@
 --> 
 <%@ page language="java" import="java.util.*,java.sql.*,java.text.*,java.io.*" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
+<%@ include file="function.jsp" %>
 
 <%! String name = new String();%>
 <% name = request.getParameter("name"); %>
@@ -58,21 +59,21 @@
                     int thisweek = Integer.valueOf(ftw.format(dNow)) + 100 * Integer.valueOf(fty.format(dNow)); //当前年份加周数
                     if (thisweek == rs.getInt("weekid")) { //若和目前时间在同一周，则显示旧资料
                         for (int i = 0; i < 5; i++) {
-                            finished[i] = rs.getString("finished"+Integer.toString(i));
-                            thisTask[i] = rs.getString("thisTask"+Integer.toString(i));
-                            thisDate[i] = rs.getString("thisDate"+Integer.toString(i));
-                            summary = rs.getString("summary");
+                            finished[i] = new String(rs.getString("finished" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            thisTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            thisDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            summary = new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk");
                         }
                         if (rs.next()) { //找到第二笔资料，应该是上星期的资料
                             for (int i = 0; i < 5; i++) {
-                                prevTask[i] = rs.getString("thisTask"+Integer.toString(i));
-                                prevDate[i] = rs.getString("thisDate"+Integer.toString(i));
+                                prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                                prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
                             }
                         }
                     } else { //若和目前时间不在同一个星期...
                         for (int i = 0; i < 5; i++) {
-                            prevTask[i] = rs.getString("thisTask"+Integer.toString(i));
-                            prevDate[i] = rs.getString("thisDate"+Integer.toString(i));
+                            prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
                         }
                     }
                 }
@@ -129,8 +130,8 @@
         %>
         <%
             for (int i = 0; i < 5; i++) {
-                session.setAttribute("prevTask" + Integer.toString(i), prevTask[i]);
-                session.setAttribute("prevDate" + Integer.toString(i), prevDate[i]);
+                session.setAttribute("prevTask" + Integer.toString(i), (prevTask[i]!=null)?(new String(prevTask[i].getBytes("ISO-8859-1"), "gbk")):"");
+                session.setAttribute("prevDate" + Integer.toString(i), (prevDate[i]!=null)?(new String(prevDate[i].getBytes("ISO-8859-1"), "gbk")):"");
             }
         %>
         </table>
