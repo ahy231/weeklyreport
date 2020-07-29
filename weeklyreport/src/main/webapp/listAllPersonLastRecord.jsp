@@ -34,7 +34,7 @@
         <th align=center>本周完成事项</th>
         <th align=center>下周预定完成事项：<br/>【<font color=red>预定完成日期</font>】工作描述</th>
         <th align=center>综合说明</th>
-        <%-- <th align=center> 登录日期 --%>
+        <th align=center> 登录日期
         </tr>
 
         <%!
@@ -71,10 +71,12 @@
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + " &nbsp; </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + new String(rs.getString("entryDate").getBytes("ISO-8859-1"), "gbk") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
                         out.println("</tr>");
                     } else {
                         out.println("<tr>");
                         out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?name=" + name + "\">" + name + "</a> </td>");
+                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");

@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
-<%@ page import="javax.servlet.http.HttpSession,java.io.*"%>
+<%@ page import="javax.servlet.http.HttpSession,java.io.*,java.util.Date,java.text.*"%>
+
+<%!
+    String getDate() {
+        Date dNow = new Date();
+        SimpleDateFormat fmd = new SimpleDateFormat("yyyy-MM-dd");
+        return fmd.format(dNow);
+    }
+%>
+
+<%!
+    String getTime() {
+        Date dNow = new Date();
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
+        return fmt.format(dNow);
+    }
+%>
 
 <%!
     boolean checkMirPassword(String name, String password) {

@@ -69,11 +69,12 @@
 
         if (insertNewData == 1) {
             //插入新资料
-            sql = "INSERT INTO " + name + "(weekid, summary, ";
+            sql = "INSERT INTO " + name + "(weekid, entryDate, entryTime, summary, ";
             sql += "finished0, finished1, finished2, finished3, finished4, ";
             sql += "thisTask0, thisTask1, thisTask2, thisTask3, thisTask4, ";
             sql += "thisDate0, thisDate1, thisDate2, thisDate3, thisDate4)  VALUES('";
             sql += Integer.toString(thisweek) + "', '";
+            sql += getDate() + "', '" + getTime() + "', '";
             sql += request.getParameter("summary") + "', '";
             sql += request.getParameter("finished0") + "', '" + request.getParameter("finished1") + "', '" + request.getParameter("finished2") + "', '" + request.getParameter("finished3") + "', '" + request.getParameter("finished4") + "', '";
             sql += request.getParameter("thisTask0") + "', '" + request.getParameter("thisTask1") + "', '" + request.getParameter("thisTask2") + "', '" + request.getParameter("thisTask3") + "', '" + request.getParameter("thisTask4") + "', '";
@@ -96,12 +97,13 @@
             sql += "thisDate2='" + request.getParameter("thisDate2") + "', ";
             sql += "thisDate3='" + request.getParameter("thisDate3") + "', ";
             sql += "thisDate4='" + request.getParameter("thisDate4") + "', ";
+            sql += "entryDate='" + getDate() + "', ";
+            sql += "entryTime='" + getTime() + "', ";
             sql += "summary='" + request.getParameter("summary") + "' ";
             sql += "WHERE weekid=" + rs.getInt("weekid");
         }
-        //更改sql语句编码
         stmt.execute(sql);
-        System.out.println(sql);
+        //System.out.println(sql);
 
         //Retrieve the record just entered
         sql = "SELECT * FROM " + name + " ORDER BY weekid DESC";
@@ -121,11 +123,13 @@
         out.println("<th align=center>本周完成事项");
         out.println("<th align=center>下周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述");
         out.println("<th align=center>综合说明");
+        out.println("<th align=center>登录日期");
         out.println("<tr>");
         out.println("<td valign=top>" + PrintSession(session, "prevDate", "prevTask") + " &nbsp; </td>");
         out.println("<td valign=top>" + PrintField(rs, "finished", 0) + " &nbsp;</td>");
         out.println("<td valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
         out.println("<td valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
+        out.println("<td valign=top>" + new String(rs.getString("entryDate").getBytes("ISO-8859-1"), "gbk") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
         out.println("</table>");
 
         rs.close();
