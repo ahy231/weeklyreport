@@ -9,7 +9,7 @@
 %>
 
 <%
-    weekDiff = Integer.valueOf(request.getParameter("weekDiff"));//和目前日期差几周，-1 代表前一周，-2 代表前两周，等等
+    weekDiff = Integer.valueOf(request.getParameter("weekDiff").toString());//和目前日期差几周，-1 代表前一周，-2 代表前两周，等等
 
     if(weekDiff == 0) {
         title = "MIR 实验室本周登录之工作进度";

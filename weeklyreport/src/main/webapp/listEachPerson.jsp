@@ -9,7 +9,7 @@
 %>
 
 <%
-    name = request.getParameter("name");
+    name = request.getParameter("name").toString();
     title = "MIR 实验室工作进度：" + name + "的全部登录资料";
 %>
 
@@ -19,7 +19,14 @@
         <title><%=title%></title>
     </head>
     <body>
-        <center>[<a href=index.jsp>回到主选单</a>]</center>
+        <%-- <center>[<a href=index.jsp>回到主选单</a>]</center> --%>
+        <%
+            if (session.getAttribute("identity") == "students") {
+                out.println("<center>[<a href=stu_form.jsp>回到本周工作进度</a>]</center>");
+            } else {
+                out.println("<center>[<a href=teachers.jsp>回到主选单</a>]</center>");
+            }
+        %>
 
         <%!
             String[] color = new String[9];

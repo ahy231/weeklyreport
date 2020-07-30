@@ -19,7 +19,7 @@
 %>
 
 <%!
-    boolean checkMirPassword(String name, String password) {
+    boolean checkStuPassword(String name, String password) {
         String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
         String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
@@ -76,6 +76,124 @@
         return result;
     }
 %>
+
+<%!
+    boolean checkTchPassword(String name, String password) {
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        PreparedStatement preState = null;
+
+        boolean result = false;
+
+        try {
+
+            //注册JDBC驱动
+            Class.forName(JDBC_DRIVER);
+
+            //打开链接
+            //System.out.println("连接数据库...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //执行查询
+            //System.out.println("实例化PreparedStatement对象...");
+            String sql = "SELECT * FROM teachers WHERE name=? AND password=?";
+            preState = conn.prepareStatement(sql);
+            preState.setString(1, name);
+            preState.setString(2, password);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) { //right password
+                result = true;
+            } else { //bad password
+                result = false;
+            }
+
+            rs.close();
+            preState.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preState != null) preState.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        //System.out.println("Goodbye!");
+        return result;
+    }
+%>
+
+<%-- <%!
+    boolean checkMirPassword(String name, String password) {
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        PreparedStatement preState = null;
+
+        boolean result = false;
+
+        try {
+
+            //注册JDBC驱动
+            Class.forName(JDBC_DRIVER);
+
+            //打开链接
+            //System.out.println("连接数据库...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //执行查询
+            //System.out.println("实例化PreparedStatement对象...");
+            String sql = "SELECT * FROM students WHERE name=? AND password=?";
+            preState = conn.prepareStatement(sql);
+            preState.setString(1, name);
+            preState.setString(2, password);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) { //right password
+                result = true;
+            } else { //bad password
+                result = false;
+            }
+
+            rs.close();
+            preState.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preState != null) preState.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        //System.out.println("Goodbye!");
+        return result;
+    }
+%> --%>
 
 <%!
     int getMirStudentsNum() {
