@@ -21,13 +21,21 @@
 <body>
     <h2 align="center">MIR 实验室工作进度登录页面</h2>
     <form name="login" action="login.jsp" method=POST align="center">
-        <div align="center">
-            name: <input type="text" name="name"><br/>
-            password: <input type="password" name="password"><br/>
-            <input type="radio" name="identity" value="students" checked="checked">学生登录<br/>
-            <input type="radio" name="identity" value="teachers">教师登录<br/>
-            <input type="submit" value="登录">
-            <input type="reset" value="重置">
-        </div>
+        <table border=0 align=center>
+            <tr>
+                <td>name: </td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>password: </td>
+                <td><input type="password" name="password"></td>
+            </tr>
+        </table>
+        <center>
+                <input type="radio" name="identity" value="students" checked="checked">学生登录
+                <input type="radio" name="identity" value="teachers">教师登录<br/>
+                <input type="submit" value="登录">
+                <input type="reset" value="重置">
+        </center>
     </form>
 </body>

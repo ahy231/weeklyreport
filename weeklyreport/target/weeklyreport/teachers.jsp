@@ -59,7 +59,6 @@
             <li>本系统特点：超级简单易用，适合忙碌的管理者
             <li>想要把整套系统移植到自己的实验室使用吗？没问题，请直接和本系统发展者<a href="http://www.cs.nthu.edu.tw/~jang">张智星</a>接洽。
         </ul>
-        <hr>
         <p align=right><font size=-1>By <a href="http://www.cs.nthu.edu.tw/~jang">Roger Jang</a></font>
         <hr>
         <center>

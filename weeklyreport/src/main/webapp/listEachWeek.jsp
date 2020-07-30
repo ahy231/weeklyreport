@@ -24,7 +24,7 @@
         <title><%=title%></title>
     </head>
     <body>
-        <center>[<a href=index.jsp>回到主选单</a>]</center>
+        <center>[<a href=teachers.jsp>回到主选单</a>]</center>
         <%!
             String[] color = new String[9];
         %>

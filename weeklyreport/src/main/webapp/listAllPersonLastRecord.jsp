@@ -9,7 +9,7 @@
         <title>MIR 实验室工作进度：每个人的最后一笔资料</title>
     </head>
     <body>
-        <center>[<a href=index.jsp>回到主选单</a>]</center>
+        <center>[<a href=teachers.jsp>回到主选单</a>]</center>
         
         <%!
             String[] color = new String[9];

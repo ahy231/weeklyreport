@@ -336,7 +336,7 @@
             result += "<ol>\n";
             for (int i = 0; i < 5; i++) {
                 if (rs.getString(taskField + Integer.toString(i)) != null) {
-                    result += "<li>¡¾<font color=red>" + new String(rs.getString(dateField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "</font>¡¿" + new String(rs.getString(taskField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
+                    result += "<li>¡¾<span style=\"color: red;\">" + new String(rs.getString(dateField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "</span>¡¿" + new String(rs.getString(taskField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
                 }
             }
             result += "</ol>\n";
@@ -357,7 +357,7 @@
             result += "<ol>\n";
             for (int i = 0; i < 5; i++) {
                 if (session.getAttribute(taskField + Integer.toString(i)) != null) {
-                    result += "<li>¡¾<font color=red>" + session.getAttribute(dateField + Integer.toString(i)) + "</font>¡¿" + session.getAttribute(taskField + Integer.toString(i)) + "\n";
+                    result += "<li>¡¾<span style=\"color: red;\">" + session.getAttribute(dateField + Integer.toString(i)) + "</span>¡¿" + session.getAttribute(taskField + Integer.toString(i)) + "\n";
                 }
             }
         } catch (Exception e) {

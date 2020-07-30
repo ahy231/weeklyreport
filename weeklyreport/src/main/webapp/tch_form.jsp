@@ -38,7 +38,7 @@
     %>
 
     <body>
-        <center>[<a href=listEachPerson.jsp?name=<%=name%>><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
+        <center>[<a href="listEachPerson.jsp?name=<%=name%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
         <%-- <ol>
         <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
         <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
