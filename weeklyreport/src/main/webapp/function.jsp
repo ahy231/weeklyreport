@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
-<%@ page import="javax.servlet.http.HttpSession,java.io.*,java.util.Date,java.text.*"%>
+<%@ page import="javax.servlet.http.HttpSession,java.io.*,java.util.Date,java.text.*,java.util.Random"%>
 
 <%!
     String getDate() {
@@ -362,6 +362,295 @@
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+%>
+
+<%!
+    boolean checkInvestCode(String code) {
+
+        boolean result = false;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM invest_code WHERE code=" + code;
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                sql = "DELETE FROM invest_code WHERE code=" + code;
+                stmt.executeUpdate(sql);
+
+                Random r = new Random();
+                int rn = r.nextInt(100000);
+                sql = "INSERT INTO invest_code SET code=" + Integer.toString(rn);
+                stmt.executeUpdate(sql);
+
+                result = true;
+            } else {
+                result = false;
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch(SQLException se) {
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch(SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
+
+<%!
+    boolean ifExistsStu(String name) {
+
+        boolean result = true;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM students WHERE name=\"" + name + "\"";
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                result = true;
+            } else {
+                result = false;
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch(SQLException se) {
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
+
+
+<%!
+    boolean ifExistsTch(String name) {
+
+        boolean result = true;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM teachers WHERE name=\"" + name + "\"";
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                result = true;
+            } else {
+                result = false;
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch(SQLException se) {
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
+
+<%!
+    boolean stu_register(String name, String password) {
+
+        boolean result = false;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            boolean res = true;
+            
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO students(name, password) VALUES(\"" + name + "\", \"" + password + "\")";
+            stmt.executeUpdate(sql);
+
+            String sql = "SELECT * FROM students WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
+            rs = stmt.executeQuery(sql);
+            if (!rs.next()) {
+                res = res && false;
+            }
+
+            sql = "CREATE TABLE " + name + " LIKE stu_default";
+            if (stmt.executeUpdate(sql) == 0) {
+                res = res && false;
+            }
+
+            result = res;
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
+
+<%!
+    boolean tch_register(String name, String password) {
+
+        boolean result = false;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            boolean res = true;
+            
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO teachers(name, password) VALUES(\"" + name + "\", \"" + password + "\")";
+            stmt.executeUpdate(sql);
+
+            String sql = "SELECT * FROM teachers WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
+            rs = stmt.executeQuery(sql);
+            if (!rs.next()) {
+                res = res && false;
+            }
+
+            /*
+            sql = "CREATE TABLE " + name + " LIKE stu_default";
+            if (stmt.executeUpdate(sql) == 0) {
+                res = res && false;
+            }
+            */
+
+            result = res;
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return result;
     }

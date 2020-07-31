@@ -21,7 +21,7 @@
 <html>
     <head>
         <meta charset="gb2312">
-        <title><link rel="shortcut icon" href="redball.gif">正在登录中……</title>
+        <title>正在登录中……</title>
     </head>
     <body>
 

@@ -10,12 +10,13 @@
     
 <head>
     <meta charset="gb2312">
-    <title><link rel="shortcut icon" href="redball.gif">MIR 实验室工作进度登录网页</title>
+    <title>MIR 实验室工作进度登录网页</title>
     <style type="text/css">
         body {background-color:aqua;}
         /* p {color:crimson;} */
         form {background-color:blue;}
         h2 {color:red}
+        a {color:red}
     </style>
 </head>
 <body>
@@ -37,5 +38,8 @@
                 <input type="submit" value="登录">
                 <input type="reset" value="重置">
         </center>
+        <div style="text-align: right;">
+            <a href="register.jsp">账号注册</a>
+        </div>
     </form>
 </body>
