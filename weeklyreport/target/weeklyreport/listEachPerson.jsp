@@ -84,7 +84,7 @@
                         out.println("<td bgcolor=" + color[j] + " align=center><font color=green><b>" + name + "</b></font> </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + "&nbsp; </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("summary") + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + (rs.getString("summary")==null?"":rs.getString("summary")) + "&nbsp;</td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
                     j += 1;
                     if (j == color.length) {

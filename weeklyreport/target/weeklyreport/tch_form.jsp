@@ -144,18 +144,18 @@
             for (int i = 0; i < 5; i++) {
                 out.print("<tr>");
                 //上周预定完事项
-                out.print("<td bgcolor=" + color[j] + ">" + ((prevTask[i].equals("null"))?"":prevTask[i]) + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + (prevTask[i]==null?"":prevTask[i]) + "&nbsp;");
                 //上周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + ((prevDate[i].equals("null"))?"":prevDate[i]) + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + (prevDate[i]==null?"":prevDate[i]) + "&nbsp;");
                 //本周完成任务
-                out.print("<td bgcolor=" + color[j] + ">" + ((finished[i].equals("null"))?"":finished[i]) + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + (finished[i]==null?"":finished[i]) + "&nbsp;");
                 //下周预定完成时向
-                out.print("<td bgcolor=" + color[j] + ">" + ((thisTask[i].equals("null"))?"":thisTask[i]) + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + (thisTask[i]==null?"":thisTask[i]) + "&nbsp;");
                 //本周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + ((thisDate[i].equals("null"))?"":thisDate[i]) + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + (thisDate[i]==null?"":thisDate[i]) + "&nbsp;");
                 if (i == 0) {
                     //本周任务总结
-                    out.print("<td rowspan=5 bgcolor=" + color[j] + ">" + ((summary.equals("null"))?"":summary) + "&nbsp;");
+                    out.print("<td rowspan=5 bgcolor=" + color[j] + ">" + ((summary==null)?"":summary) + "&nbsp;");
                 }
             } 
             j++;
@@ -165,8 +165,8 @@
         %>
         <%-- <%
             for (int i = 0; i < 5; i++) {
-                session.setAttribute("prevTask" + Integer.toString(i), (prevTask[i]!=null)?(new String(prevTask[i].getBytes("ISO-8859-1"), "gbk")):"");
-                session.setAttribute("prevDate" + Integer.toString(i), (prevDate[i]!=null)?(new String(prevDate[i].getBytes("ISO-8859-1"), "gbk")):"");
+                session.setAttribute("prevTask" + Integer.toString(i), (prevTask[i]!=null)?(prevTask[i]:"");
+                session.setAttribute("prevDate" + Integer.toString(i), (prevDate[i]!=null)?(prevDate[i]:"");
             }
         %> --%>
         </table>

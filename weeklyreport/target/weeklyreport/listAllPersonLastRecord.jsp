@@ -70,7 +70,7 @@
                         out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name +"</a> </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + " &nbsp; </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("summary") + " &nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + (rs.getString("summary")==null?"":rs.getString("summary")) + " &nbsp;</td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + rs.getString("entryTime") + " &nbsp;</td>");
                         out.println("</tr>");
                     } else {
