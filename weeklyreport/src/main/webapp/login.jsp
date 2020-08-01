@@ -3,13 +3,13 @@
 <%@ include file="function.jsp"%>
 
 <%!
-    String name = new String();
+    String name = null;
     String password = new String();
     String identity = new String();
 %>
 
 <%
-    name = request.getParameter("name").toString();
+    name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
     password = request.getParameter("password").toString();
     identity = request.getParameter("identity").toString();
 
@@ -27,18 +27,18 @@
 
         <%
             if (identity.equals("teachers")) {
-                if (checkStuPassword(name, password)) {
+                if (checkTchPassword(name, password)) {
                     response.setStatus(response.SC_MOVED_TEMPORARILY);
                     response.setHeader("Location", "teachers.jsp");
                 }
             } else {
-                if (checkTchPassword(name, password)) {
+                if (checkStuPassword(name, password)) {
                     response.setStatus(response.SC_MOVED_TEMPORARILY);
                     response.setHeader("Location", "stu_form.jsp");
                 }
             }
-            out.println("<p align=center>" + identity + "</p>");
-            out.println("<p align=center>亲爱的 <font color=green>" + session.getAttribute("name") + "</font>，您的认证资料错误，请回<a href=\"javascript:history.go(-1)\">前页</a>修改。");
+            //out.println("<p align=center>" + identity + "</p>");
+            out.println("<p align=center>亲爱的 <font color=green>" + name + "</font>，您的认证资料错误，请回<a href=\"javascript:history.go(-1)\">前页</a>修改。");
         %>
 
     </body>

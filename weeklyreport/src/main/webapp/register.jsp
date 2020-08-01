@@ -10,8 +10,20 @@
         </style>
         <script>
             function invest_code() {
-                document.getElementById("msg").innerHTML="请输入教师邀请码：";
-                document.getElementById("input").innerHTML="<input type=\"text\" name=\"invest_code\">"
+                // document.write("invest_code is running……");
+                var tbl = document.getElementsByName("table1")[0];
+                var node = tbl.insertRow(4);
+                var cell1 = node.insertCell(0);
+                cell1.innerHTML="请输入教师邀请码：";
+                var cell2 = node.insertCell(1);
+                cell2.innerHTML="<input type=\"text\" name=\"invest_code\">";
+                // document.write("invest_code stoped.");
+            }
+            function clear_code() {
+                // document.write("clear is running……");
+                var tbl = document.getElementsByName("table1")[0];
+                tbl.deleteRow(4);
+                // document.write("clear stoped.");
             }
         </script>
     </head>
@@ -32,14 +44,16 @@
                     <td><input type="password" name="password2"></td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="identity" value="students" checked="checked">学生注册</td>
-                    <td><input type="radio" name="identity" value="teachers" onclick="">教师注册</td>
-                </tr>
-                <tr>
-                    <td><p id="msg"></p></td>
-                    <td><p id="input"></p></td>
+                    <td colspan=2>
+                        <input type="radio" name="identity" value="students" onclick="clear_code()" checked>学生注册
+                        <input type="radio" name="identity" value="teachers" onclick="invest_code()">教师注册
+                    </td>
                 </tr>
             </table>
+            <center>
+                <input type="submit" value="提交">
+                <input type="reset" value="重置" onclick="clear_code()">
+            </center>
         </form>
     </body>
 </html>

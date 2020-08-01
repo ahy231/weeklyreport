@@ -10,7 +10,7 @@
 <%@ include file="function.jsp" %>
 
 <%! String name = new String();%>
-<% name = session.getAttribute("name").toString(); %>
+<% name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk"); %>
 
 <html>
     <head>
@@ -38,7 +38,7 @@
     %>
 
     <body>
-        <center>[<a href="listEachPerson.jsp?name=<%=name%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
+        <center>[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
         <%-- <ol>
         <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
         <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
@@ -62,6 +62,15 @@
         %>
 
         <%
+            for (int i = 0; i < 5; i++) {
+                prevTask[i] = "";
+                prevDate[i] = "";
+                thisTask[i] = "";
+                thisDate[i] = "";
+                finished[i] = "";
+            }
+            summary = "";
+            
             try {
                 //注册JDBC驱动
                 Class.forName(JDBC_DRIVER);
@@ -81,21 +90,21 @@
                     int thisweek = Integer.valueOf(ftw.format(dNow)) + 100 * Integer.valueOf(fty.format(dNow)); //当前年份加周数
                     if (thisweek == rs.getInt("weekid")) { //若和目前时间在同一周，则显示旧资料
                         for (int i = 0; i < 5; i++) {
-                            finished[i] = new String(rs.getString("finished" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            thisTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            thisDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            summary = new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk");
+                            finished[i] = rs.getString("finished" + Integer.toString(i));
+                            thisTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                            thisDate[i] = rs.getString("thisDate" + Integer.toString(i));
+                            summary = rs.getString("summary");
                         }
                         if (rs.next()) { //找到第二笔资料，应该是上星期的资料
                             for (int i = 0; i < 5; i++) {
-                                prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                                prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                                prevTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                                prevDate[i] = rs.getString("thisDate" + Integer.toString(i));
                             }
                         }
                     } else { //若和目前时间不在同一个星期...
                         for (int i = 0; i < 5; i++) {
-                            prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            prevTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                            prevDate[i] = rs.getString("thisDate" + Integer.toString(i));
                         }
                     }
                 }
@@ -135,18 +144,18 @@
             for (int i = 0; i < 5; i++) {
                 out.print("<tr>");
                 //上周预定完事项
-                out.print("<td bgcolor=" + color[j] + ">" + prevTask[i] + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + ((prevTask[i].equals("null"))?"":prevTask[i]) + "&nbsp;");
                 //上周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + prevDate[i] + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + ((prevDate[i].equals("null"))?"":prevDate[i]) + "&nbsp;");
                 //本周完成任务
-                out.print("<td bgcolor=" + color[j] + ">" + finished[i] + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + ((finished[i].equals("null"))?"":finished[i]) + "&nbsp;");
                 //下周预定完成时向
-                out.print("<td bgcolor=" + color[j] + ">" + thisTask[i] + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + ((thisTask[i].equals("null"))?"":thisTask[i]) + "&nbsp;");
                 //本周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + thisDate[i] + "&nbsp;");
+                out.print("<td bgcolor=" + color[j] + ">" + ((thisDate[i].equals("null"))?"":thisDate[i]) + "&nbsp;");
                 if (i == 0) {
                     //本周任务总结
-                    out.print("<td rowspan=5 bgcolor=" + color[j] + ">" + summary + "&nbsp;");
+                    out.print("<td rowspan=5 bgcolor=" + color[j] + ">" + ((summary.equals("null"))?"":summary) + "&nbsp;");
                 }
             } 
             j++;

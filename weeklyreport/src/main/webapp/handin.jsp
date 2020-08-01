@@ -6,12 +6,13 @@
 <html>
 
 <%!
-    String name = new String();
+    String name = null;
     String title = new String();
 %>
 
 <%
-    name = request.getParameter("name").toString();
+    name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
+    //name = request.getParameter("name").toString();
     title = name + "工作进度登记表";
 %>
 
@@ -26,7 +27,7 @@
     //int recordId=-1;
 
     String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8";
+    String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     String USER = "stu_login";
     String PASS = "123";
@@ -52,12 +53,13 @@
         int thisweek = Integer.valueOf(ftw.format(dNow)) + 100 * Integer.valueOf(fty.format(dNow));
 
         if (rs.next()) {
+            //System.out.println("rs.get1");
             if (thisweek == rs.getInt("weekid")) {
                 insertNewData = 0;
             }
-        } else {
-            throw new Exception("Rs contents nothing!");
-        }
+        }// else {
+            //throw new Exception("Rs contents nothing!");
+        //}
 
         if (insertNewData == 1) {
             //插入新资料
@@ -67,31 +69,32 @@
             sql += "thisDate0, thisDate1, thisDate2, thisDate3, thisDate4)  VALUES('";
             sql += Integer.toString(thisweek) + "', '";
             sql += getDate() + "', '" + getTime() + "', '";
-            sql += request.getParameter("summary") + "', '";
-            sql += request.getParameter("finished0") + "', '" + request.getParameter("finished1") + "', '" + request.getParameter("finished2") + "', '" + request.getParameter("finished3") + "', '" + request.getParameter("finished4") + "', '";
-            sql += request.getParameter("thisTask0") + "', '" + request.getParameter("thisTask1") + "', '" + request.getParameter("thisTask2") + "', '" + request.getParameter("thisTask3") + "', '" + request.getParameter("thisTask4") + "', '";
-            sql += request.getParameter("thisDate0") + "', '" + request.getParameter("thisDate1") + "', '" + request.getParameter("thisDate2") + "', '" + request.getParameter("thisDate3") + "', '" + request.getParameter("thisDate4") + "'";
+            sql += new String(request.getParameter("summary").getBytes("ISO-8859-1"), "gbk") + "', '";
+            sql += new String(request.getParameter("finished0").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("finished1").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("finished2").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("finished3").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("finished4").toString().getBytes("ISO-8859-1"), "gbk") + "', '";
+            sql += new String(request.getParameter("thisTask0").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisTask1").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisTask2").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisTask3").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisTask4").toString().getBytes("ISO-8859-1"), "gbk") + "', '";
+            sql += new String(request.getParameter("thisDate0").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisDate1").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisDate2").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisDate3").toString().getBytes("ISO-8859-1"), "gbk") + "', '" + new String(request.getParameter("thisDate4").toString().getBytes("ISO-8859-1"), "gbk") + "')";
         } else {
             //更新资料
             sql = "UPDATE " + name + " SET ";
-            sql += "finished0='" + request.getParameter("finished0") + "', ";
-            sql += "finished1='" + request.getParameter("finished1") + "', ";
-            sql += "finished2='" + request.getParameter("finished2") + "', ";
-            sql += "finished3='" + request.getParameter("finished3") + "', ";
-            sql += "finished4='" + request.getParameter("finished4") + "', ";
-            sql += "thisTask0='" + request.getParameter("thisTask0") + "', ";
-            sql += "thisTask1='" + request.getParameter("thisTask1") + "', ";
-            sql += "thisTask2='" + request.getParameter("thisTask2") + "', ";
-            sql += "thisTask3='" + request.getParameter("thisTask3") + "', ";
-            sql += "thisTask4='" + request.getParameter("thisTask4") + "', ";
-            sql += "thisDate0='" + request.getParameter("thisDate0") + "', ";
-            sql += "thisDate1='" + request.getParameter("thisDate1") + "', ";
-            sql += "thisDate2='" + request.getParameter("thisDate2") + "', ";
-            sql += "thisDate3='" + request.getParameter("thisDate3") + "', ";
-            sql += "thisDate4='" + request.getParameter("thisDate4") + "', ";
+            sql += "finished0='" + new String(request.getParameter("finished0").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "finished1='" + new String(request.getParameter("finished1").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "finished2='" + new String(request.getParameter("finished2").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "finished3='" + new String(request.getParameter("finished3").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "finished4='" + new String(request.getParameter("finished4").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisTask0='" + new String(request.getParameter("thisTask0").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisTask1='" + new String(request.getParameter("thisTask1").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisTask2='" + new String(request.getParameter("thisTask2").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisTask3='" + new String(request.getParameter("thisTask3").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisTask4='" + new String(request.getParameter("thisTask4").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisDate0='" + new String(request.getParameter("thisDate0").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisDate1='" + new String(request.getParameter("thisDate1").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisDate2='" + new String(request.getParameter("thisDate2").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisDate3='" + new String(request.getParameter("thisDate3").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
+            sql += "thisDate4='" + new String(request.getParameter("thisDate4").toString().getBytes("ISO-8859-1"), "gbk") + "', ";
             sql += "entryDate='" + getDate() + "', ";
             sql += "entryTime='" + getTime() + "', ";
-            sql += "summary='" + request.getParameter("summary") + "' ";
+            sql += "summary='" + new String(request.getParameter("summary").toString().getBytes("ISO-8859-1"), "gbk") + "' ";
+            //System.out.println("rs.get2");
             sql += "WHERE weekid=" + rs.getInt("weekid");
         }
         stmt.execute(sql);
@@ -118,10 +121,11 @@
         out.println("<th align=center>登录日期");
         out.println("<tr>");
         out.println("<td valign=top>" + PrintSession(session, "prevDate", "prevTask") + " &nbsp; </td>");
+        //System.out.println("rs.get3");
         out.println("<td valign=top>" + PrintField(rs, "finished", 0) + " &nbsp;</td>");
         out.println("<td valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
-        out.println("<td valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
-        out.println("<td valign=top>" + new String(rs.getString("entryDate").getBytes("ISO-8859-1"), "gbk") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + " &nbsp;</td>");
+        out.println("<td valign=top>" + rs.getString("summary").toString() + " &nbsp;</td>");
+        out.println("<td valign=top>" + rs.getString("entryDate").toString() + "<br>" + rs.getString("entryTime").toString() + " &nbsp;</td>");
         out.println("</table>");
 
         rs.close();
@@ -147,7 +151,7 @@
 
 <hr>
 <center>
-[<a target=_blank href="listEachPerson.jsp?name=<%=name%>"><strong style="color:green"><%=name%></strong>登录之全部资料</a>]
+[<a target=_blank href="listEachPerson.jsp?id=<%=getStuId(name)%>"><strong style="color:green"><%=name%></strong>登录之全部资料</a>]
 <%-- [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>] --%>
 </center>
 

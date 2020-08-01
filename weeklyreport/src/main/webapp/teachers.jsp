@@ -16,7 +16,7 @@
 
     <body>
         <h3><img src="redball.gif">本周学生进度</h3>
-        <form style="text-align:center;" name=form1 action="tch_form.jsp" method=get target=_blank>
+        <form style="text-align:center;" name=form1 action="tch_form.jsp" method=POST target=_blank>
             <select name="name" onChange="this.form.submit()">
                 <option>=== 请选择学生的名字 ===</option>
                 <%
@@ -44,9 +44,9 @@
         <%
             for (int i=0; i < studentsNum; i++){
                 if (i==0){
-                    out.print("<a target=_blank href=listEachPerson.jsp?name=" + students[i] + ">" + students[i] + "</a>");
+                    out.print("<a target=_blank href=listEachPerson.jsp?id=" + getStuId(students[i]) + ">" + students[i] + "</a>");
                 } else {
-                    out.print("、<a target=_blank href=listEachPerson.jsp?name=" + students[i] + ">" + students[i] + "</a>");
+                    out.print("、<a target=_blank href=listEachPerson.jsp?id=" + getStuId(students[i]) + ">" + students[i] + "</a>");
                 }
             }
         %>

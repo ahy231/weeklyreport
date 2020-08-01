@@ -20,7 +20,7 @@
         %>
     </head>
     <body>
-        <center>[<a href=listEachPerson.jsp?name=<%=name%>><%=name%>的所有登录资料</a>][<a href=index.jsp>返回登录界面</a>]</center>
+        <center>[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=index.jsp>返回登录界面</a>]</center>
         <ol>
         <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
         <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
@@ -63,21 +63,21 @@
                     int thisweek = Integer.valueOf(ftw.format(dNow)) + 100 * Integer.valueOf(fty.format(dNow)); //当前年份加周数
                     if (thisweek == rs.getInt("weekid")) { //若和目前时间在同一周，则显示旧资料
                         for (int i = 0; i < 5; i++) {
-                            finished[i] = new String(rs.getString("finished" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            thisTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            thisDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            summary = new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk");
+                            finished[i] = rs.getString("finished" + Integer.toString(i));
+                            thisTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                            thisDate[i] = rs.getString("thisDate" + Integer.toString(i));
+                            summary = rs.getString("summary");
                         }
                         if (rs.next()) { //找到第二笔资料，应该是上星期的资料
                             for (int i = 0; i < 5; i++) {
-                                prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                                prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                                prevTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                                prevDate[i] = rs.getString("thisDate" + Integer.toString(i));
                             }
                         }
                     } else { //若和目前时间不在同一个星期...
                         for (int i = 0; i < 5; i++) {
-                            prevTask[i] = new String(rs.getString("thisTask" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
-                            prevDate[i] = new String(rs.getString("thisDate" + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk");
+                            prevTask[i] = rs.getString("thisTask" + Integer.toString(i));
+                            prevDate[i] = rs.getString("thisDate" + Integer.toString(i));
                         }
                     }
                 }
@@ -117,25 +117,25 @@
             for (int i = 0; i < 5; i++) {
                 out.print("<tr>");
                 //上周预定完事项
-                out.print("<td>" + prevTask[i] + "&nbsp;");
+                out.print("<td>" + (prevTask[i]==null?"":prevTask[i]) + "&nbsp;");
                 //上周任务完成时间
-                out.print("<td>" + prevDate[i] + "&nbsp;");
+                out.print("<td>" + (prevDate[i]==null?"":prevDate[i]) + "&nbsp;");
                 //本周完成任务
-                out.print("<td><textarea name=\"finished" + Integer.toString(i) + "\" cols=20 rows=3 wrap=virtual>" + finished[i] + "</textarea>");
+                out.print("<td><textarea name=\"finished" + Integer.toString(i) + "\" cols=20 rows=3 wrap=virtual>" + (finished[i]==null?"":finished[i]) + "</textarea>");
                 //下周预定完成时向
-                out.print("<td><textarea name=\"thisTask" + Integer.toString(i) + "\" cols=20 rows=3 wrap=virtual>" + thisTask[i] + "</textarea>");
+                out.print("<td><textarea name=\"thisTask" + Integer.toString(i) + "\" cols=20 rows=3 wrap=virtual>" + (thisTask[i]==null?"":thisTask[i]) + "</textarea>");
                 //本周任务完成时间
-                out.print("<td><textarea name=\"thisDate" + Integer.toString(i) + "\" cols=15 rows=3 wrap=virtual>" + thisDate[i] + "</textarea>");
+                out.print("<td><textarea name=\"thisDate" + Integer.toString(i) + "\" cols=15 rows=3 wrap=virtual>" + (thisDate[i]==null?"":thisDate[i]) + "</textarea>");
                 if (i == 0) {
                     //本周任务总结
-                    out.print("<td rowspan=5><textarea name=\"summary\" cols=20 rows=18 wrap=virtual>" + summary + "</textarea>");
+                    out.print("<td rowspan=5><textarea name=\"summary\" cols=20 rows=18 wrap=virtual>" + (summary==null?"":summary) + "</textarea>");
                 }
             } 
         %>
         <%
             for (int i = 0; i < 5; i++) {
-                session.setAttribute("prevTask" + Integer.toString(i), (prevTask[i]!=null)?(new String(prevTask[i].getBytes("ISO-8859-1"), "gbk")):"");
-                session.setAttribute("prevDate" + Integer.toString(i), (prevDate[i]!=null)?(new String(prevDate[i].getBytes("ISO-8859-1"), "gbk")):"");
+                session.setAttribute("prevTask" + Integer.toString(i), (prevTask[i]!=null)?prevTask[i]:"");
+                session.setAttribute("prevDate" + Integer.toString(i), (prevDate[i]!=null)?prevDate[i]:"");
             }
         %>
         </table>
@@ -147,7 +147,7 @@
         </form>
         <hr>
         <center>
-        [<a target=_blank href="listEachPerson.jsp?name=<%=name%>"><%=name%>登录之全部资料</a>]
+        <%-- [<a target=_blank href="listEachPerson.jsp?name=<%=name%>"><%=name%>登录之全部资料</a>] --%>
         <%-- [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>] --%>
         </center>
     </body>

@@ -1,6 +1,110 @@
 <%@ page language="java" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
-<%@ page import="javax.servlet.http.HttpSession,java.io.*,java.util.Date,java.text.*,java.util.Random"%>
+<%@ page import="javax.servlet.http.HttpSession,java.io.*,java.util.Date,java.text.*,java.util.Random,java.sql.*"%>
+
+<%!
+    int getStuId(String name) {
+
+        int result = 0;
+
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM students WHERE name=\"" + name + "\"";
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                result = rs.getInt("id");
+            } else {
+                throw new Exception("No student's info!");
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
+
+<%!
+    String getStuNameById(int id) {
+
+        String result = new String();
+        
+        String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+        String USER = "stu_login";
+        String PASS = "123";
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM students WHERE id=" + Integer.toString(id);
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                result = rs.getString("name");
+            } else {
+                throw new Exception("No student's info!");
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return result;
+    }
+%>
 
 <%!
     String getDate() {
@@ -272,7 +376,8 @@
 
             if (rs.next()) {
                 for (int i = 0; i < studentsNum; i++) {
-                    students[i] = new String(rs.getString("name").getBytes("ISO-8859-1"), "gbk");
+                    //students[i] = new String(rs.getString("name").getBytes("ISO-8859-1"), "gbk");
+                    students[i] = rs.getString("name");
                     rs.next();
                 }
             }
@@ -308,13 +413,13 @@
             for (int i = 0; i < 5; i++) {
                 if (editable == 0) {
                     if (rs.getString(field + Integer.toString(i)) != null) {
-                        result += "<li>" + new String(rs.getString(field + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
+                        result += "<li>" + rs.getString(field + Integer.toString(i)) + "\n";
                     }
                 } else {
                     result += "<li><textarea name=\n";
                     result += field + Integer.toString(i) + "\n";
                     result += " cols=30 rows=2 wrap=virtual>\n";
-                    result += new String(rs.getString(field + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
+                    result += rs.getString(field + Integer.toString(i)) + "\n";
                     result += "</textarea></li>\n";
                 }
             }
@@ -336,7 +441,7 @@
             result += "<ol>\n";
             for (int i = 0; i < 5; i++) {
                 if (rs.getString(taskField + Integer.toString(i)) != null) {
-                    result += "<li>¡¾<span style=\"color: red;\">" + new String(rs.getString(dateField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "</span>¡¿" + new String(rs.getString(taskField + Integer.toString(i)).getBytes("ISO-8859-1"), "gbk") + "\n";
+                    result += "<li>¡¾<span style=\"color: red;\">" + rs.getString(dateField + Integer.toString(i)) + "</span>¡¿" + rs.getString(taskField + Integer.toString(i)) + "\n";
                 }
             }
             result += "</ol>\n";
@@ -558,16 +663,17 @@
             String sql = "INSERT INTO students(name, password) VALUES(\"" + name + "\", \"" + password + "\")";
             stmt.executeUpdate(sql);
 
-            String sql = "SELECT * FROM students WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
+            sql = "SELECT * FROM students WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
             rs = stmt.executeQuery(sql);
             if (!rs.next()) {
                 res = res && false;
             }
 
             sql = "CREATE TABLE " + name + " LIKE stu_default";
-            if (stmt.executeUpdate(sql) == 0) {
-                res = res && false;
-            }
+            stmt.executeUpdate(sql);
+            //if (stmt.executeUpdate(sql) == 0) {
+            //    res = res && false;
+            //}
 
             result = res;
             
@@ -619,7 +725,7 @@
             String sql = "INSERT INTO teachers(name, password) VALUES(\"" + name + "\", \"" + password + "\")";
             stmt.executeUpdate(sql);
 
-            String sql = "SELECT * FROM teachers WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
+            sql = "SELECT * FROM teachers WHERE name=\"" + name + "\" AND password=\"" + password + "\"";
             rs = stmt.executeQuery(sql);
             if (!rs.next()) {
                 res = res && false;
