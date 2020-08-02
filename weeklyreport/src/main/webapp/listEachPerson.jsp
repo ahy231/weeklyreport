@@ -4,12 +4,20 @@
 <%@ include file="function.jsp" %>
 
 <%!
-    String name = new String();
+    String name = null;
     String title = new String();
 %>
 
 <%
-    name = request.getParameter("name");
+    //name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
+    int id = Integer.valueOf(request.getParameter("id"));
+    name = getStuNameById(id);
+    if (session.getAttribute("identity").toString().equals("students")) {
+        if (!session.getAttribute("name").toString().equals(name)) {
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "identityError.jsp");
+        }
+    }
     title = "MIR 实验室工作进度：" + name + "的全部登录资料";
 %>
 
@@ -19,7 +27,14 @@
         <title><%=title%></title>
     </head>
     <body>
-        <center>[<a href=index.jsp>回到主选单</a>]</center>
+        <%-- <center>[<a href=index.jsp>回到主选单</a>]</center> --%>
+        <%
+            if (session.getAttribute("identity").toString().equals("students")) {
+                out.println("<center>[<a href=stu_form.jsp>回到本周工作进度</a>]</center>");
+            } else {
+                out.println("<center>[<a href=teachers.jsp>回到主选单</a>]</center>");
+            }
+        %>
 
         <%!
             String[] color = new String[9];
@@ -44,7 +59,7 @@
         <th align=center>本周完成事项
         <th align=center>下周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述
         <th align=center>综合说明
-        <%-- <th align=center> 登录日期 --%>
+        <th align=center> 登录日期
 
         <%
             String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -69,7 +84,8 @@
                         out.println("<td bgcolor=" + color[j] + " align=center><font color=green><b>" + name + "</b></font> </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + "&nbsp; </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + (rs.getString("summary")==null?"":rs.getString("summary")) + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
                     j += 1;
                     if (j == color.length) {
                         j = 0;

@@ -9,7 +9,7 @@
 %>
 
 <%
-    weekDiff = Integer.valueOf(request.getParameter("weekDiff"));//和目前日期差几周，-1 代表前一周，-2 代表前两周，等等
+    weekDiff = Integer.valueOf(request.getParameter("weekDiff").toString());//和目前日期差几周，-1 代表前一周，-2 代表前两周，等等
 
     if(weekDiff == 0) {
         title = "MIR 实验室本周登录之工作进度";
@@ -24,7 +24,7 @@
         <title><%=title%></title>
     </head>
     <body>
-        <center>[<a href=index.jsp>回到主选单</a>]</center>
+        <center>[<a href=teachers.jsp>回到主选单</a>]</center>
         <%!
             String[] color = new String[9];
         %>
@@ -52,7 +52,7 @@
         <th align=center>本周完成事项
         <th align=center>下周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述
         <th align=center>综合说明
-        <%-- <th align=center> 登录日期 --%>
+        <th align=center> 登录日期
 
         <%!
             String[] students = getMirStudentsName();
@@ -93,13 +93,15 @@
 
                     if (rs.next()) { //有此人之登陆资料
                         out.println("<tr>");
-                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?name=" + name + "\">" + name + "</a> </td>");
+                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name + "</a> </td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + "&nbsp;</td>");
                         out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + new String(rs.getString("summary").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("summary") + "&nbsp;</td>");
+                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + rs.getString("entryTime") + "&nbsp;</td>");
                     } else {
                         out.println("<tr>");
-                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?name=" + name + "\">" + name + "</a> </td>");
+                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name + "</a> </td>");
+                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
                         out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
