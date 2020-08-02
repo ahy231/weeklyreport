@@ -44,6 +44,15 @@
         %>
 
         <%
+            for (int i = 0; i < 5; i++) {
+                prevTask[i] = "";
+                prevDate[i] = "";
+                thisTask[i] = "";
+                thisDate[i] = "";
+                finished[i] = "";
+            }
+            summary = "";
+            
             try {
                 //×¢²áJDBCÇý¶¯
                 Class.forName(JDBC_DRIVER);

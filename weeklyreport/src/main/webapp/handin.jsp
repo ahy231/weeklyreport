@@ -12,6 +12,7 @@
 
 <%
     name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
+    //System.out.println("name : " + name);
     //name = request.getParameter("name").toString();
     title = name + "工作进度登记表";
 %>

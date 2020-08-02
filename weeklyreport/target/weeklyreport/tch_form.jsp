@@ -10,7 +10,14 @@
 <%@ include file="function.jsp" %>
 
 <%! String name = new String();%>
-<% name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk"); %>
+<%
+    name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
+    String forbiddenName = new String("=== 请选择学生的名字 ===");
+    if (name.equals(forbiddenName)) {
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", "pleaseChooseAName.jsp");
+    }
+%>
 
 <html>
     <head>
