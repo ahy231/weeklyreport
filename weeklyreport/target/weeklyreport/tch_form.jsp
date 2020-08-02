@@ -12,19 +12,12 @@
 <%! String name = new String();%>
 <%
     name = new String(request.getParameter("name").toString().getBytes("ISO-8859-1"), "gbk");
-    String forbiddenName = new String("=== 请选择学生的名字 ===");
-    if (name.equals(forbiddenName)) {
-        response.setStatus(response.SC_MOVED_TEMPORARILY);
-        response.setHeader("Location", "pleaseChooseAName.jsp");
-    }
 %>
 
 <html>
     <head>
         <meta charset="gb2312">
-        <%
-            out.println("<title>登录" + name + "的本周工作进度</title>");
-        %>
+        <title>登录<%=name%>的本周工作进度</title>
     </head>
 
     <%!
@@ -45,6 +38,16 @@
     %>
 
     <body>
+        
+        <%
+            String forbiddenName = new String("=== 请选择学生的名字 ===");
+            if (name.equals(forbiddenName)) {
+                name = "stu_default";
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", "pleaseChooseAName.jsp");
+            }
+        %>
+
         <center>[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
         <%-- <ol>
         <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
