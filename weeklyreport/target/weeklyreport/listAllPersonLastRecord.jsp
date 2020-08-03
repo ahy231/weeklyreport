@@ -7,9 +7,10 @@
     <head>
         <meta charset="gb2312">
         <title>MIR 实验室工作进度：每个人的最后一笔资料</title>
+        <link rel="stylesheet" type="text/css" href="type.css">
     </head>
     <body>
-        <center>[<a href=teachers.jsp>回到主选单</a>]</center>
+        [<a href=teachers.jsp class="center">回到主选单</a>]
         
         <%!
             String[] color = new String[9];
@@ -28,13 +29,14 @@
         %>
 
         <p>
-        <table border=1 align=center>
+        <table>
+        <caption>所有学生的最后一份资料</caption>
         <tr>
-        <th align=center>姓名</th>
-        <th align=center>本周完成事项</th>
-        <th align=center>下周预定完成事项：<br/>【<font color=red>预定完成日期</font>】工作描述</th>
-        <th align=center>综合说明</th>
-        <th align=center> 登录日期
+        <th>姓名</th>
+        <th>本周完成事项</th>
+        <th>下周预定完成事项：<br/>【<span class="red">预定完成日期</span>】工作描述</th>
+        <th>综合说明</th>
+        <th> 登录日期
         </tr>
 
         <%!
@@ -67,20 +69,20 @@
 
                     if (rs.next()) {
                         out.println("<tr>");
-                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name +"</a> </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + " &nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + (rs.getString("summary")==null?"":rs.getString("summary")) + " &nbsp;</td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + rs.getString("entryTime") + " &nbsp;</td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\"><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name +"</a> </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + PrintField(rs, "finished", 0) + " &nbsp; </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + (rs.getString("summary")==null?"":rs.getString("summary")) + " &nbsp;</td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + rs.getString("entryDate") + "<br>" + rs.getString("entryTime") + " &nbsp;</td>");
                         out.println("</tr>");
                     } else {
                         out.println("<tr>");
-                        out.println("<td bgcolor=" + color[j] + " align=center><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name + "</a> </td>");
-                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
-                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
-                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
-                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
-                        out.println("<td bgcolor=gray valign=top>&nbsp;</td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\"><a target=_blank href=\"listEachPerson.jsp?id=" + getStuId(name) + "\">" + name + "</a> </td>");
+                        out.println("<td style=\"background-color: grey\">&nbsp;</td>");
+                        out.println("<td style=\"background-color: grey\">&nbsp;</td>");
+                        out.println("<td style=\"background-color: grey\">&nbsp;</td>");
+                        out.println("<td style=\"background-color: grey\">&nbsp;</td>");
+                        out.println("<td style=\"background-color: grey\">&nbsp;</td>");
                         out.println("</tr>");
                     }
                     

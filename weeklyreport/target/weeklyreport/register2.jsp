@@ -26,52 +26,59 @@
         <meta charset="gb2312">
         <title>注册结果</title>
         <style>
-            h2 {text-align: center;}
+            h2 {text-align: center; color: red;}
+            p {text-align: center;}
         </style>
     </head>
     <body>
 
         <%
             try {
-                if (identity.equals("students")) {
-                    if (ifExistsStu(name)) {
-                        out.println("<h2>注册失败</h2>");
-                        out.println("<p>对不起，该用户名已存在，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
-                    } else {
-                        if (!password1.equals(password2)) {
-                            out.println("<h2>注册失败</h2>");
-                            out.println("<p>两次输入的密码不同，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
-                        } else {
-                            if (stu_register(name, password1)) {
-                                out.println("<h2>注册成功</h2>");
-                                out.println("<p>恭喜你注册成功，可以前往<a href=\"index.jsp\">登陆页面</a>登录账号。</p>");
-                            } else {
-                                out.println("<h2>注册失败</h2>");
-                                out.println("<p>对不起，服务器出了点小差错，请稍后重试。</p>");
-                                throw new Exception("Register failed!");
-                            }
-                        }
-                    }
+                if (name.equals(""))
+                {
+                    out.println("<h2>注册失败</h2>");
+                    out.println("<p>对不起，用户名不能为空！退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
                 } else {
-                    if (ifExistsTch(name)) {
-                        out.println("<h2>注册失败</h2>");
-                        out.println("<p>对不起，该用户名已存在，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
-                    } else {
-                        if (!password1.equals(password2)) {
+                    if (identity.equals("students")) {
+                        if (ifExistsStu(name)) {
                             out.println("<h2>注册失败</h2>");
-                            out.println("<p>两次输入的密码不同，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
+                            out.println("<p>对不起，该用户名已存在，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
                         } else {
-                            if (!checkInvestCode(inv_code)) {
+                            if (!password1.equals(password2)) {
                                 out.println("<h2>注册失败</h2>");
-                                out.println("<p>对不起，您输入的邀请码有误，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
+                                out.println("<p>两次输入的密码不同，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
                             } else {
-                                if (tch_register(name, password2)) {
+                                if (stu_register(name, password1)) {
                                     out.println("<h2>注册成功</h2>");
                                     out.println("<p>恭喜你注册成功，可以前往<a href=\"index.jsp\">登陆页面</a>登录账号。</p>");
                                 } else {
                                     out.println("<h2>注册失败</h2>");
                                     out.println("<p>对不起，服务器出了点小差错，请稍后重试。</p>");
                                     throw new Exception("Register failed!");
+                                }
+                            }
+                        }
+                    } else {
+                        if (ifExistsTch(name)) {
+                            out.println("<h2>注册失败</h2>");
+                            out.println("<p>对不起，该用户名已存在，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
+                        } else {
+                            if (!password1.equals(password2)) {
+                                out.println("<h2>注册失败</h2>");
+                                out.println("<p>两次输入的密码不同，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
+                            } else {
+                                if (!checkInvestCode(inv_code)) {
+                                    out.println("<h2>注册失败</h2>");
+                                    out.println("<p>对不起，您输入的邀请码有误，请退回<a href=\"javascript:history.go(-1)\">前一页</a>重新注册。</p>");
+                                } else {
+                                    if (tch_register(name, password2)) {
+                                        out.println("<h2>注册成功</h2>");
+                                        out.println("<p>恭喜你注册成功，可以前往<a href=\"index.jsp\">登陆页面</a>登录账号。</p>");
+                                    } else {
+                                        out.println("<h2>注册失败</h2>");
+                                        out.println("<p>对不起，服务器出了点小差错，请稍后重试。</p>");
+                                        throw new Exception("Register failed!");
+                                    }
                                 }
                             }
                         }

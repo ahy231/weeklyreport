@@ -20,6 +20,7 @@
 <head>
 <meta charset="gb2312">
 <title><%=title%></title>
+<link rel="stylesheet" type="text/css" href="type.css">
 </head>
 <body>
 
@@ -113,20 +114,22 @@
         out.println("亲爱的 <font color=green>"+ name + "</font>，您输入的资料如下。若有错误，可回<a href=\"javascript:history.go(-1)\">前页</a>修改。");
 
         out.println("<p>");
+        out.println("<hr>");
         out.println("<table align=center border=1>");
+        out.println("<caption><strong>" + name + "</strong>的工作登记表</caption>");
         out.println("<tr>");
-        out.println("<th align=center>上周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述");
-        out.println("<th align=center>本周完成事项");
-        out.println("<th align=center>下周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述");
-        out.println("<th align=center>综合说明");
-        out.println("<th align=center>登录日期");
+        out.println("<th>上周预定完成事项：<br>【<span class=\"red\">预定完成日期</span>】工作描述");
+        out.println("<th>本周完成事项");
+        out.println("<th>下周预定完成事项：<br>【<span class=\"red\">预定完成日期</span>】工作描述");
+        out.println("<th>综合说明");
+        out.println("<th>登录日期");
         out.println("<tr>");
-        out.println("<td valign=top>" + PrintSession(session, "prevDate", "prevTask") + " &nbsp; </td>");
+        out.println("<td>" + PrintSession(session, "prevDate", "prevTask") + " &nbsp; </td>");
         //System.out.println("rs.get3");
-        out.println("<td valign=top>" + PrintField(rs, "finished", 0) + " &nbsp;</td>");
-        out.println("<td valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
-        out.println("<td valign=top>" + rs.getString("summary").toString() + " &nbsp;</td>");
-        out.println("<td valign=top>" + rs.getString("entryDate").toString() + "<br>" + rs.getString("entryTime").toString() + " &nbsp;</td>");
+        out.println("<td>" + PrintField(rs, "finished", 0) + " &nbsp;</td>");
+        out.println("<td>" + PrintDateTask(rs, "thisDate", "thisTask") + " &nbsp; </td>");
+        out.println("<td>" + rs.getString("summary").toString() + " &nbsp;</td>");
+        out.println("<td>" + rs.getString("entryDate").toString() + "<br>" + rs.getString("entryTime").toString() + " &nbsp;</td>");
         out.println("</table>");
 
         rs.close();
@@ -151,10 +154,10 @@
 %>
 
 <hr>
-<center>
+<div class="center">
 [<a target=_blank href="listEachPerson.jsp?id=<%=getStuId(name)%>"><strong style="color:green"><%=name%></strong>登录之全部资料</a>]
 <%-- [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>] --%>
-</center>
+</div>
 
 </body>
 </html>

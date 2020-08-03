@@ -18,6 +18,7 @@
     <head>
         <meta charset="gb2312">
         <title>登录<%=name%>的本周工作进度</title>
+        <link rel="stylesheet" type="text/css" href="type.css">
     </head>
 
     <%!
@@ -48,7 +49,8 @@
             }
         %>
 
-        <center>[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</center>
+        <div class="center">[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=teachers.jsp>返回主选单</a>]</div>
+        <hr>
         <%-- <ol>
         <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
         <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
@@ -141,31 +143,32 @@
             }
         %>
         <%-- <form method=post action="handin.jsp"> --%>
-        <table border=1 align=center>
+        <table>
+        <caption><strong><%=name%>的本周工作登记表</strong></caption>
         <tr>
-        <th align=center colspan=2>上周预定完成事项
-        <th align=center rowspan=2>本周完成事项
-        <th align=center colspan=2>下周预定完成事项
-        <th align=center rowspan=2>综合说明
+        <th colspan=2>上周预定完成事项
+        <th rowspan=2>本周完成事项
+        <th colspan=2>下周预定完成事项
+        <th rowspan=2>综合说明
         <tr>
-        <th align=center>工作描述<th align=center>预定完成日期
-        <th align=center>工作描述<th align=center>预定完成日期
+        <th>工作描述<th>预定完成日期
+        <th>工作描述<th>预定完成日期
         <% 
             for (int i = 0; i < 5; i++) {
                 out.print("<tr>");
                 //上周预定完事项
-                out.print("<td bgcolor=" + color[j] + ">" + (prevTask[i]==null?"":prevTask[i]) + "&nbsp;");
+                out.print("<td style=\"background-color: " + color[j] + "\">" + (prevTask[i]==null?"":prevTask[i]) + "&nbsp;");
                 //上周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + (prevDate[i]==null?"":prevDate[i]) + "&nbsp;");
+                out.print("<td style=\"background-color: " + color[j] + "\">" + (prevDate[i]==null?"":prevDate[i]) + "&nbsp;");
                 //本周完成任务
-                out.print("<td bgcolor=" + color[j] + ">" + (finished[i]==null?"":finished[i]) + "&nbsp;");
+                out.print("<td style=\"background-color: " + color[j] + "\">" + (finished[i]==null?"":finished[i]) + "&nbsp;");
                 //下周预定完成时向
-                out.print("<td bgcolor=" + color[j] + ">" + (thisTask[i]==null?"":thisTask[i]) + "&nbsp;");
+                out.print("<td style=\"background-color: " + color[j] + "\">" + (thisTask[i]==null?"":thisTask[i]) + "&nbsp;");
                 //本周任务完成时间
-                out.print("<td bgcolor=" + color[j] + ">" + (thisDate[i]==null?"":thisDate[i]) + "&nbsp;");
+                out.print("<td style=\"background-color: " + color[j] + "\">" + (thisDate[i]==null?"":thisDate[i]) + "&nbsp;");
                 if (i == 0) {
                     //本周任务总结
-                    out.print("<td rowspan=5 bgcolor=" + color[j] + ">" + ((summary==null)?"":summary) + "&nbsp;");
+                    out.print("<td rowspan=5 style=\"background-color: " + color[j] + "\">" + ((summary==null)?"":summary) + "&nbsp;");
                 }
             } 
             j++;
@@ -187,9 +190,9 @@
         <input type=hidden name="name" value="<%=name%>"> --%>
         <%-- </form> --%>
         <hr>
-        <center>
+        <div class="center">
         [<a target=_blank href="listEachWeek.jsp?weekDiff=0">本周登录之全部资料</a>]
         [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>]
-        </center>
+        </div>
     </body>
 </html>

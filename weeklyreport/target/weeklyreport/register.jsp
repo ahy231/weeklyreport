@@ -8,6 +8,7 @@
         <style type="text/css">
             h2 {text-align: center;}
         </style>
+        <link rel="stylesheet" type="text/css" href="type.css">
         <script>
             function invest_code() {
                 // document.write("invest_code is running……");
@@ -30,7 +31,7 @@
     <body>
         <h2>账号注册</h2>
         <form name="user_info" action="register2.jsp" method=POST>
-            <table name="table1" border=1 align=center>
+            <table name="table1">
                 <tr>
                     <td>用户名：</td>
                     <td><input type="text" name="name"></td>
@@ -50,10 +51,10 @@
                     </td>
                 </tr>
             </table>
-            <center>
+            <div class=center>
                 <input type="submit" value="提交">
                 <input type="reset" value="重置" onclick="clear_code()">
-            </center>
+            </div>
         </form>
     </body>
 </html>

@@ -6,7 +6,10 @@
     <head>
         <meta charset="gb2312">
         <title>MIR 实验室工作进度登录网页</title>
-
+        <link rel="stylesheet" type="text/css" href="type.css">
+        <style>
+            body {text-align: left;}
+        </style>
     </head>
 
     <%!
@@ -59,11 +62,11 @@
             <li>本系统特点：超级简单易用，适合忙碌的管理者
             <li>想要把整套系统移植到自己的实验室使用吗？没问题，请直接和本系统发展者<a href="http://www.cs.nthu.edu.tw/~jang">张智星</a>接洽。
         </ul>
-        <p align=right><font size=-1>By <a href="http://www.cs.nthu.edu.tw/~jang">Roger Jang</a></font>
+        <p style="text-align: right">By <a href="http://www.cs.nthu.edu.tw/~jang">Roger Jang</a>
         <hr>
-        <center>
+        <div class=center>
         [<a target=_blank href="listEachWeek.jsp?weekDiff=0">本周登录之全部资料</a>]
         [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>]
-        </center>
+        </div>
     </body>
 </html>
