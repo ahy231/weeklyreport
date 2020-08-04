@@ -22,6 +22,10 @@
     <head>
         <meta charset="gb2312">
         <title>正在登录中……</title>
+        <style>
+            p {text-align: center;}
+        </style>
+        <link rel="stylesheet" type="text/css" href="type.css">
     </head>
     <body>
 
@@ -38,7 +42,7 @@
                 }
             }
             //out.println("<p align=center>" + identity + "</p>");
-            out.println("<p align=center>亲爱的 <font color=green>" + name + "</font>，您的认证资料错误，请回<a href=\"javascript:history.go(-1)\">前页</a>修改。");
+            out.println("<p>亲爱的 <strong>" + name + "</strong>，您的认证资料错误，请回<a href=\"javascript:history.go(-1)\">前页</a>修改。");
         %>
 
     </body>

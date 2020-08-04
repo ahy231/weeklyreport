@@ -15,16 +15,10 @@
 <html>
     <head>
         <meta charset="gb2312">
-        <%
-            out.println("<title>登录" + name + "的本周工作进度</title>");
-        %>
+        <title>登录<%=name%>的本周工作进度</title>
+        <link rel="stylesheet" type="text/css" href="type.css">
     </head>
     <body>
-        <center>[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=index.jsp>返回登录界面</a>]</center>
-        <ol>
-        <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
-        <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
-        </ol>
         <%!
             String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
             String DB_URL = "jdbc:mysql://localhost:3306/students?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -44,6 +38,15 @@
         %>
 
         <%
+            for (int i = 0; i < 5; i++) {
+                prevTask[i] = "";
+                prevDate[i] = "";
+                thisTask[i] = "";
+                thisDate[i] = "";
+                finished[i] = "";
+            }
+            summary = "";
+            
             try {
                 //注册JDBC驱动
                 Class.forName(JDBC_DRIVER);
@@ -104,15 +107,16 @@
             }
         %>
         <form method=post action="handin.jsp">
-        <table border=1 align=center>
+        <table style="margin: 20px auto 10px">
+        <caption><Strong><%=name%></strong>的本周工作登记表</caption>
         <tr>
-        <th align=center colspan=2>上周预定完成事项
-        <th align=center rowspan=2>本周完成事项
-        <th align=center colspan=2>下周预定完成事项
-        <th align=center rowspan=2>综合说明
+        <th colspan=2>上周预定完成事项
+        <th rowspan=2>本周完成事项
+        <th colspan=2>下周预定完成事项
+        <th rowspan=2>综合说明
         <tr>
-        <th align=center>工作描述<th align=center>预定完成日期
-        <th align=center>工作描述<th align=center>预定完成日期
+        <th>工作描述<th>预定完成日期
+        <th>工作描述<th>预定完成日期
         <% 
             for (int i = 0; i < 5; i++) {
                 out.print("<tr>");
@@ -139,16 +143,17 @@
             }
         %>
         </table>
-        <h3 align=center>
+        <h3 class="center">
         <input type=submit value="送出表单">
         <input type=reset  value="恢复原值">
         </h3>
         <input type=hidden name="name" value="<%=name%>">
         </form>
+        <ol style="text-align: left">
+        <li>请务必在每星期五下午五点前填写完毕。过了星期六午夜，系统自动跳到下一周，就无法再填写本周的进度了。
+        <li>请务必每一栏都要填写，尤其是「本周预定完成事项」，一定要填入相关的「预定完成时间」。
+        </ol>
         <hr>
-        <center>
-        <%-- [<a target=_blank href="listEachPerson.jsp?name=<%=name%>"><%=name%>登录之全部资料</a>] --%>
-        <%-- [<a target=_blank href="listAllPersonLastRecord.jsp">每位同学的最後一笔资料</a>] --%>
-        </center>
+        <div class="center">[<a href="listEachPerson.jsp?id=<%=getStuId(name)%>"><%=name%>的所有登录资料</a>][<a href=index.jsp>返回登录界面</a>]</div>
     </body>
 </html>

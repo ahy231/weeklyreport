@@ -25,14 +25,15 @@
     <head>
         <meta charset="gb2312">
         <title><%=title%></title>
+        <link rel="stylesheet" type="text/css" href="type.css">
     </head>
     <body>
         <%-- <center>[<a href=index.jsp>回到主选单</a>]</center> --%>
         <%
             if (session.getAttribute("identity").toString().equals("students")) {
-                out.println("<center>[<a href=stu_form.jsp>回到本周工作进度</a>]</center>");
+                out.println("[<a href=stu_form.jsp class=\"center\">回到本周工作进度</a>]");
             } else {
-                out.println("<center>[<a href=teachers.jsp>回到主选单</a>]</center>");
+                out.println("[<a href=teachers.jsp class=\"center\">回到主选单</a>]");
             }
         %>
 
@@ -53,13 +54,14 @@
         %>
 
         <p>
-        <table border=1 align=center>
+        <table>
+        <caption><strong><%=name%>的所有登录资料</strong></caption>
         <tr>
-        <th align=center>姓名
-        <th align=center>本周完成事项
-        <th align=center>下周预定完成事项：<br>【<font color=red>预定完成日期</font>】工作描述
-        <th align=center>综合说明
-        <th align=center> 登录日期
+        <th>姓名
+        <th>本周完成事项
+        <th>下周预定完成事项：<br>【<span class="red">预定完成日期</span>】工作描述
+        <th>综合说明
+        <th> 登录日期
 
         <%
             String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -81,11 +83,11 @@
                 int j = 0;
                 while (rs.next()) { //do while?
                         out.println("<tr>");
-                        out.println("<td bgcolor=" + color[j] + " align=center><font color=green><b>" + name + "</b></font> </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintField(rs, "finished", 0) + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("summary") + "&nbsp;</td>");
-                        out.println("<td bgcolor=" + color[j] + " valign=top>" + rs.getString("entryDate") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\"><strong><b>" + name + "</b></strong> </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + PrintField(rs, "finished", 0) + "&nbsp; </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + PrintDateTask(rs, "thisDate", "thisTask") + "&nbsp; </td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + (rs.getString("summary")==null?"":rs.getString("summary")) + "&nbsp;</td>");
+                        out.println("<td style=\"background-color: " + color[j] + ";\">" + rs.getString("entryDate") + "<br>" + new String(rs.getString("entryTime").getBytes("ISO-8859-1"), "gbk") + "&nbsp;</td>");
                     j += 1;
                     if (j == color.length) {
                         j = 0;

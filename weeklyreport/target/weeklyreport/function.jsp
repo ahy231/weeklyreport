@@ -324,7 +324,7 @@
             ResultSet rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
-                studentsNum = rs.getInt("student_num");
+                studentsNum = rs.getInt("student_num") - 1;
             }
 
             rs.close();
@@ -377,7 +377,11 @@
             if (rs.next()) {
                 for (int i = 0; i < studentsNum; i++) {
                     //students[i] = new String(rs.getString("name").getBytes("ISO-8859-1"), "gbk");
-                    students[i] = rs.getString("name");
+                    if (!rs.getString("name").equals("stu_default")) {
+                        students[i] = rs.getString("name");
+                    } else {
+                        i--;
+                    }
                     rs.next();
                 }
             }
@@ -462,7 +466,7 @@
             result += "<ol>\n";
             for (int i = 0; i < 5; i++) {
                 if (session.getAttribute(taskField + Integer.toString(i)) != null) {
-                    result += "<li>¡¾<span style=\"color: red;\">" + session.getAttribute(dateField + Integer.toString(i)) + "</span>¡¿" + session.getAttribute(taskField + Integer.toString(i)) + "\n";
+                    result += "<li>¡¾<span class=\"red\">" + session.getAttribute(dateField + Integer.toString(i)) + "</span>¡¿" + session.getAttribute(taskField + Integer.toString(i)) + "\n";
                 }
             }
         } catch (Exception e) {
