@@ -33,12 +33,12 @@
             if (identity.equals("teachers")) {
                 if (checkTchPassword(name, password)) {
                     response.setStatus(response.SC_MOVED_TEMPORARILY);
-                    response.setHeader("Location", "teachers.jsp");
+                    response.setHeader("Location", "http://localhost:8080/weeklyreport/teachers.jsp");
                 }
             } else {
                 if (checkStuPassword(name, password)) {
                     response.setStatus(response.SC_MOVED_TEMPORARILY);
-                    response.setHeader("Location", "stu_form.jsp");
+                    response.setHeader("Location", "http://localhost:8080/weeklyreport/Stu_info");
                 }
             }
             //out.println("<p align=center>" + identity + "</p>");
